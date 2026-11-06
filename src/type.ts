@@ -10,7 +10,7 @@ export const AgentMemorySchema = z.object({
     "preferences",
   ]),
   tags: z.array(z.string()),
-  created: z.string(),
+  created: z.iso.datetime(),
   agent: z.string(),
   title: z.string(),
   summary: z.string(),
