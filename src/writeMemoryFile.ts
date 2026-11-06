@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import { writeFile } from "node:fs/promises";
+import { writeFile, rename } from "node:fs/promises";
 import {
   type AgentMemorySave,
   type AgentMemory,
@@ -23,7 +23,23 @@ export const writeMemoryFile = async (data: AgentMemorySave): Promise<void> => {
     throw SchemaCheck.error;
   }
 
-  const directory = join(await dirRead(), category, SchemaCheck.data.id);
+  const directoryTemp = join(
+    await dirRead(),
+    category,
+    `${SchemaCheck.data.id}.json.tmp`,
+  );
 
-  const stringify = JSON.stringify(data);
+  const directory = join(
+    await dirRead(),
+    category,
+    `${SchemaCheck.data.id}.json`,
+  );
+
+  try {
+    const stringify = JSON.stringify(SchemaCheck.data);
+    await writeFile(directoryTemp, stringify, "utf-8");
+    await rename(directoryTemp, directory);
+  } catch (error) {
+    throw new Error();
+  }
 };
