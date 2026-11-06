@@ -24,3 +24,7 @@ export type InputSchema = z.infer<typeof InputSchema>;
 
 export type Category =
   "lessons" | "patterns" | "context" | "commands" | "preferences";
+
+export const MemoryGetInputSchema = z.object({
+  id: z.string(),
+});
