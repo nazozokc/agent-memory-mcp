@@ -2,7 +2,13 @@ import { z } from "zod";
 
 export const AgentMemorySchema = z.object({
   id: z.string(),
-  category: z.string(),
+  category: z.enum([
+    "lessons",
+    "patterns",
+    "context",
+    "commands",
+    "preferences",
+  ]),
   tags: z.array(z.string()),
   created: z.string(),
   agent: z.string(),
@@ -13,18 +19,18 @@ export const AgentMemorySchema = z.object({
 
 export type AgentMemory = z.infer<typeof AgentMemorySchema>;
 
-export const InputSchema = z.object({
-  query: z.string(),
-  category: z.string(),
-  tags: z.array(z.string()),
-  limit: z.number(),
+export const AgentMemorySaveSchema = AgentMemorySchema.omit({
+  id: true,
+  created: true,
 });
 
-export type InputSchema = z.infer<typeof InputSchema>;
+export type AgentMemorySave = z.infer<typeof AgentMemorySaveSchema>;
 
 export type Category =
   "lessons" | "patterns" | "context" | "commands" | "preferences";
 
-export const MemoryGetInputSchema = z.object({
-  id: z.string(),
+export const ConfigTypeSchema = z.object({
+  dir: z.string(),
 });
+
+export type ConfigType = z.infer<typeof ConfigTypeSchema>;
