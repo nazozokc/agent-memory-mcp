@@ -9,7 +9,7 @@ const ConfigDefault: ConfigType = {
   dir: join(homedir(), ".agent-memory"),
 };
 
-export const dirRead = async (): Promise<ConfigType["dir"]> => {
+export const ConfigDir = async (): Promise<ConfigType["dir"]> => {
   const readConfig = await readFile(CONFIG_DIR, "utf-8");
   const readConfigSchema = ConfigTypeSchema.safeParse(JSON.parse(readConfig));
 

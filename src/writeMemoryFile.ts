@@ -6,7 +6,7 @@ import {
   AgentMemorySchema,
   AgentMemorySaveSchema,
 } from "./type.ts";
-import { dirRead } from "./constant/ConfigRead.ts";
+import { ConfigDir } from "./constant/ConfigRead.ts";
 import { randomUUIDv7 } from "node:crypto";
 
 export const writeMemoryFile = async (data: AgentMemorySave): Promise<void> => {
@@ -31,13 +31,13 @@ export const writeMemoryFile = async (data: AgentMemorySave): Promise<void> => {
   const category: AgentMemory["category"] = SchemaCheck.data.category;
 
   const directoryTemp = join(
-    await dirRead(),
+    await ConfigDir(),
     category,
     `${SchemaCheck.data.id}.json.tmp`,
   );
 
   const directory = join(
-    await dirRead(),
+    await ConfigDir(),
     category,
     `${SchemaCheck.data.id}.json`,
   );
