@@ -4,24 +4,31 @@ import {
   type AgentMemorySave,
   type AgentMemory,
   AgentMemorySchema,
+  AgentMemorySaveSchema,
 } from "./type.ts";
 import { dirRead } from "./constant/ConfigRead.ts";
 import { randomUUIDv7 } from "node:crypto";
 
 export const writeMemoryFile = async (data: AgentMemorySave): Promise<void> => {
-  const category: AgentMemory["category"] = data.category;
+  const SaveSchema = AgentMemorySaveSchema.safeParse(data);
+
+  if (!SaveSchema.success) {
+    throw new Error();
+  }
 
   const savedata: AgentMemory = {
     id: randomUUIDv7(),
     created: new Date().toISOString(),
-    ...data,
+    ...SaveSchema.data,
   };
 
   const SchemaCheck = AgentMemorySchema.safeParse(savedata);
 
   if (!SchemaCheck.success) {
-    throw SchemaCheck.error;
+    throw new Error();
   }
+
+  const category: AgentMemory["category"] = SchemaCheck.data.category;
 
   const directoryTemp = join(
     await dirRead(),
