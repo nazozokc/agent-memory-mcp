@@ -1,8 +1,7 @@
-import { readFile, readdir, stat } from "node:fs/promises";
-import { homedir } from "node:os";
+import { readdir, stat } from "node:fs/promises";
 import { join } from "node:path";
 import { ConfigDir } from "../constant/ConfigRead.ts";
-import { AgentMemorySchema, type AgentMemory } from "../type";
+import { type AgentMemory } from "../type";
 
 export const getFile = async (id: string): Promise<void> => {
   const categories: AgentMemory["category"][] = [
@@ -30,5 +29,3 @@ export const getFile = async (id: string): Promise<void> => {
     if (!somes) continue;
   }
 };
-
-const writeData = async (): Promise<void> => {};
