@@ -27,7 +27,7 @@
               pkgs.vite
             ];
             shellHook = ''
-              echo "[devShell:schrun] bun $(bun --version)"
+              echo "[devShell:agent-memory-mcp] bun $(bun --version)"
             '';
           };
         }
