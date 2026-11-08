@@ -7,6 +7,7 @@ import { join } from "node:path";
 import { ConfigDir } from "./constant/ConfigRead.ts";
 import { getFile } from "./memory_get/index.ts";
 import { AgentMemorySaveSchema } from "./type.ts";
+import { writeMemoryFile } from "./memory_save/writeMemoryFile.ts";
 
 const lessons = join(await ConfigDir(), "lessons");
 const patterns = join(await ConfigDir(), "patterns");
@@ -60,7 +61,20 @@ server.registerTool(
     description: "Get agent memory",
     inputSchema: AgentMemorySaveSchema.shape,
   },
-  async ({ id }) => {},
+  async ({ data }) => {
+    const result = await writeMemoryFile(data);
+
+    if (result === false) {
+      return {
+        content: [
+          {
+            type: "text",
+            text: "successfully save agent memory",
+          },
+        ],
+      };
+    }
+  },
 );
 
 export async function main() {

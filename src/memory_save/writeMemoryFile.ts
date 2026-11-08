@@ -9,9 +9,22 @@ import {
 import { ConfigDir } from "../constant/ConfigRead.ts";
 import { randomUUIDv7 } from "node:crypto";
 
-export const writeMemoryFile = async (
-  data: AgentMemorySave,
-): Promise<boolean> => {
+export const writeMemoryFile = async ({
+  category,
+  tags,
+  agent,
+  title,
+  summary,
+  content,
+}: AgentMemorySave): Promise<boolean> => {
+  const data = {
+    category,
+    tags,
+    agent,
+    title,
+    summary,
+    content,
+  };
   const SaveSchema = AgentMemorySaveSchema.safeParse(data);
 
   if (!SaveSchema.success) {
@@ -30,17 +43,17 @@ export const writeMemoryFile = async (
     throw new Error();
   }
 
-  const category: AgentMemory["category"] = SchemaCheck.data.category;
+  const categories: AgentMemorySave["category"] = SchemaCheck.data.category;
 
   const directoryTemp = join(
     await ConfigDir(),
-    category,
+    categories,
     `${SchemaCheck.data.id}.json.tmp`,
   );
 
   const directory = join(
     await ConfigDir(),
-    category,
+    categories,
     `${SchemaCheck.data.id}.json`,
   );
 
