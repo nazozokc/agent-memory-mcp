@@ -28,9 +28,3 @@ export type AgentMemorySave = z.infer<typeof AgentMemorySaveSchema>;
 
 export type Category =
   "lessons" | "patterns" | "context" | "commands" | "preferences";
-
-export const ConfigTypeSchema = z.object({
-  dir: z.string(),
-});
-
-export type ConfigType = z.infer<typeof ConfigTypeSchema>;

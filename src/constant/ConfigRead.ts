@@ -1,7 +1,13 @@
-import { ConfigTypeSchema, type ConfigType } from "../type.ts";
+import { z } from "zod";
 import { join } from "node:path";
 import { homedir } from "node:os";
 import { readFile } from "node:fs\/promises";
+
+const ConfigTypeSchema = z.object({
+  dir: z.string(),
+});
+
+type ConfigType = z.infer<typeof ConfigTypeSchema>;
 
 const CONFIG_DIR = join(homedir(), ".config", "agent-memory", "config.json");
 
