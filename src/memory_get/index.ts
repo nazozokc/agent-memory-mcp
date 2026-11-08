@@ -1,7 +1,7 @@
 import { readdir, readFile, stat } from "node:fs/promises";
 import { join } from "node:path";
 import { ConfigDir } from "../constant/ConfigRead.ts";
-import { AgentMemorySchema, type AgentMemory } from "../type.ts";
+import { AgentMemorySchema, type AgentMemory } from "../Globaltype.ts";
 
 export const getFile = async (id: string): Promise<AgentMemory | undefined> => {
   const categories: AgentMemory["category"][] = [

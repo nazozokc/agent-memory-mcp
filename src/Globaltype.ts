@@ -19,12 +19,5 @@ export const AgentMemorySchema = z.object({
 
 export type AgentMemory = z.infer<typeof AgentMemorySchema>;
 
-export const AgentMemorySaveSchema = AgentMemorySchema.omit({
-  id: true,
-  created: true,
-});
-
-export type AgentMemorySave = z.infer<typeof AgentMemorySaveSchema>;
-
 export type Category =
   "lessons" | "patterns" | "context" | "commands" | "preferences";

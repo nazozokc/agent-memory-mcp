@@ -6,8 +6,8 @@ import { MCP_NAME } from "./constant/app.ts";
 import { join } from "node:path";
 import { ConfigDir } from "./constant/ConfigRead.ts";
 import { getFile } from "./memory_get/index.ts";
-import { AgentMemorySaveSchema } from "./type.ts";
-import { writeMemoryFile } from "./memory_save/writeMemoryFile.ts";
+import { AgentMemorySaveSchema } from "./memory_save/type.ts";
+import { writeMemoryFile } from "./memory_save/index.ts";
 
 const lessons = join(await ConfigDir(), "lessons");
 const patterns = join(await ConfigDir(), "patterns");
@@ -59,12 +59,19 @@ server.registerTool(
   "memory_save",
   {
     description: "Get agent memory",
-    inputSchema: AgentMemorySaveSchema.shape,
+    inputSchema: AgentMemorySaveSchema,
   },
-  async ({  }) => {
-    const result = await writeMemoryFile(data);
+  async ({ category, tags, agent, title, summary, content }) => {
+    const result = await writeMemoryFile({
+      category,
+      tags,
+      agent,
+      title,
+      summary,
+      content,
+    });
 
-    if (result === false) {
+    if (result === true) {
       return {
         content: [
           {
@@ -72,6 +79,23 @@ server.registerTool(
             text: "successfully save agent memory",
           },
         ],
+        structuredContent: {
+          success: true,
+        },
+      };
+    }
+
+    if (result === false) {
+      return {
+        content: [
+          {
+            type: "text",
+            text: "Failed save agent memory",
+          },
+        ],
+        structuredContent: {
+          success: false,
+        },
       };
     }
   },
