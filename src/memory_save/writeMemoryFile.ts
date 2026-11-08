@@ -43,7 +43,7 @@ export const writeMemoryFile = async (data: AgentMemorySave): Promise<void> => {
   );
 
   try {
-    const stringify = JSON.stringify(SchemaCheck.data);
+    const stringify = JSON.stringify(SchemaCheck.data, null, 2);
     await writeFile(directoryTemp, stringify, "utf-8");
     await rename(directoryTemp, directory);
   } catch (error) {

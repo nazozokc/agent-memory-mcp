@@ -5,6 +5,7 @@ import { MemoryGetInputSchema } from "./memory_get/type.ts";
 import { MCP_NAME } from "./constant/app.ts";
 import { join } from "node:path";
 import { ConfigDir } from "./constant/ConfigRead.ts";
+import { getFile } from "./memory_get/index.ts";
 
 const lessons = join(await ConfigDir(), "lessons");
 const patterns = join(await ConfigDir(), "patterns");
@@ -26,9 +27,30 @@ server.registerTool(
     description: "Get agent memory",
     inputSchema: MemoryGetInputSchema,
   },
-  async ({ id }) => ({
-    content: [],
-  }),
+  async ({ id }) => {
+    const memory = getFile(id);
+
+    if (!memory) {
+      return {
+        content: [
+          {
+            type: "text",
+            text: `Not Found ${id}`,
+          },
+        ],
+      };
+    }
+
+    return {
+      content: [
+        {
+          type: "text",
+          text: "Memory retrieved successfully.",
+        },
+      ],
+      structuredContent: memory,
+    };
+  },
 );
 
 export async function main() {
