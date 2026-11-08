@@ -5,8 +5,8 @@ import {
   type AgentMemory,
   AgentMemorySchema,
   AgentMemorySaveSchema,
-} from "./type.ts";
-import { ConfigDir } from "./constant/ConfigRead.ts";
+} from "../type.ts";
+import { ConfigDir } from "../constant/ConfigRead.ts";
 import { randomUUIDv7 } from "node:crypto";
 
 export const writeMemoryFile = async (data: AgentMemorySave): Promise<void> => {

@@ -33,4 +33,6 @@ export const getFile = async (id: string): Promise<AgentMemory | undefined> => {
 
     return SafeSchema.data;
   }
+
+  return undefined;
 };
