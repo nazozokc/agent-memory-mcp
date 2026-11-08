@@ -61,7 +61,7 @@ server.registerTool(
     description: "Get agent memory",
     inputSchema: AgentMemorySaveSchema.shape,
   },
-  async ({ data }) => {
+  async ({  }) => {
     const result = await writeMemoryFile(data);
 
     if (result === false) {
