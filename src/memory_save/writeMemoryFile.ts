@@ -9,7 +9,9 @@ import {
 import { ConfigDir } from "../constant/ConfigRead.ts";
 import { randomUUIDv7 } from "node:crypto";
 
-export const writeMemoryFile = async (data: AgentMemorySave): Promise<void> => {
+export const writeMemoryFile = async (
+  data: AgentMemorySave,
+): Promise<boolean> => {
   const SaveSchema = AgentMemorySaveSchema.safeParse(data);
 
   if (!SaveSchema.success) {
@@ -46,7 +48,8 @@ export const writeMemoryFile = async (data: AgentMemorySave): Promise<void> => {
     const stringify = JSON.stringify(SchemaCheck.data, null, 2);
     await writeFile(directoryTemp, stringify, "utf-8");
     await rename(directoryTemp, directory);
+    return true;
   } catch (error) {
-    throw new Error();
+    return false;
   }
 };

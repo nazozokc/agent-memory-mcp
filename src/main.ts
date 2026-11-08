@@ -6,6 +6,7 @@ import { MCP_NAME } from "./constant/app.ts";
 import { join } from "node:path";
 import { ConfigDir } from "./constant/ConfigRead.ts";
 import { getFile } from "./memory_get/index.ts";
+import { AgentMemorySaveSchema } from "./type.ts";
 
 const lessons = join(await ConfigDir(), "lessons");
 const patterns = join(await ConfigDir(), "patterns");
@@ -51,6 +52,15 @@ server.registerTool(
       structuredContent: memory,
     };
   },
+);
+
+server.registerTool(
+  "memory_save",
+  {
+    description: "Get agent memory",
+    inputSchema: AgentMemorySaveSchema.shape,
+  },
+  async ({ id }) => {},
 );
 
 export async function main() {
