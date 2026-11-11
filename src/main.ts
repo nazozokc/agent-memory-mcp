@@ -85,19 +85,17 @@ server.registerTool(
       };
     }
 
-    if (result === false) {
-      return {
-        content: [
-          {
-            type: "text",
-            text: "Failed save agent memory",
-          },
-        ],
-        structuredContent: {
-          success: false,
+    return {
+      content: [
+        {
+          type: "text",
+          text: "Failed save agent memory",
         },
-      };
-    }
+      ],
+      structuredContent: {
+        success: false,
+      },
+    };
   },
 );
 
